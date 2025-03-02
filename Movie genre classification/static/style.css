@@ -1,0 +1,61 @@
+body {
+    display: flex;
+    justify-content: flex-start; /* Align container to the left */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+    background: url('https://media.istockphoto.com/id/1034331322/photo/background-of-watching-movies-objects-on-the-left-with-reel.webp?a=1&b=1&s=612x612&w=0&k=20&c=Iuh3p1hbNL3_B6XFABmnykkOCT7nejCQ7ByVVeK2noo=') no-repeat center center fixed;
+    background-size: cover;
+    padding-left: 5%; /* Adjust to control left positioning */
+}
+
+.container {
+    width: 50%; /* Make the container take half of the screen */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    padding: 40px; /* Increase padding for a larger look */
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+    h1 {
+    color: #333;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+button {
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(255, 71, 87, 0.5);
+}
+
+button:hover {
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(255, 71, 87, 0.7);
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.result span {
+    font-weight: bold;
+    color: #28a745;
+}
