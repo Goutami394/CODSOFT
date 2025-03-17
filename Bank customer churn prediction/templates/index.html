@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Churn Prediction</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+   
+
+    <style>
+        /* Background Styling */
+        body {
+            background:linear-gradient(45deg,#d2001a,#7462ff,#f48e21,#23d5ab); 
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        
+        
+        /* Container Styling with Background Image */
+        .container {
+            max-width: 500px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 244, 248, 0.9)), 
+                        url('https://img.freepik.com/free-photo/business-concept-with-graphic-holography_23-2149160928.jpg?ga=GA1.1.371315175.1740154497&semt=ais_hybrid') center/cover;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: center;
+
+        }
+        
+        /* Hover effect */
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Form Input Fields */
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Interactive focus effect */
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+            outline: none;
+        }
+        
+        /* Button Styling */
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #007bff;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+        
+        /* Button Hover & Click Effect */
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+        
+        /* Loading Indicator */
+        .loading {
+            display: none;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        
+        /* Result Display */
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        /* Success Message */
+        .result.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        /* Error Message */
+        .result.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                max-width: 90%;
+                padding: 20px;
+            }
+        }
+        h2{
+            font-family:'Poppins',sans-serif;
+            font-size:30px;
+            text-transform:uppercase;
+            text-align:center;
+            background:linear-gradient(to right,#fc72ff,#8f68ff,#487bff,#8f68ff,#fc72ff);
+            background-size:200%;
+            backround-clip:text;
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            animation:animate-gradient 2.5s linear infinite;
+
+        }
+        @keyframes animate-gradient{
+            to{
+                background-position:200%;
+            }
+        }
+        .emoji-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0.8;
+        }
+
+        .emoji:nth-child(2) { animation-duration: 10s; left: 10%; top: 20%; }
+        .emoji:nth-child(3) { animation-duration: 12s; left: 30%; top: 60%; }
+        .emoji:nth-child(4) { animation-duration: 9s; left: 50%; top: 30%; }
+        .emoji:nth-child(5) { animation-duration: 11s; left: 70%; top: 70%; }
+        .emoji:nth-child(6) { animation-duration: 7s; left: 90%; top: 40%; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) translateX(30px) rotate(15deg);
+            }
+            100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji-container">
+        <div class="emoji">😊</div>
+<div class="emoji">🚀</div>
+<div class="emoji">🌟</div>
+<div class="emoji">🔥</div>
+<div class="emoji">💻</div>
+<div class="emoji">📈</div>
+<div class="emoji">💰</div>
+<div class="emoji">📊</div>
+<div class="emoji">🔍</div>
+<div class="emoji">💡</div>
+<div class="emoji">🎯</div>
+<div class="emoji">📱</div>
+<div class="emoji">🖥️</div>
+<div class="emoji">📅</div>
+<div class="emoji">✅</div>
+<div class="emoji">🤖</div>
+<div class="emoji">🌍</div>
+<div class="emoji">📢</div>
+<div class="emoji">⚡</div>
+
+    </div>
+
+        
+
+    </style>
+    
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="gradient-text text-center mb-4">🔍 Customer Churn Prediction</h2>
+
+
+        <form id="prediction-form">
+            <input type="number" name="CreditScore" class="form-control" placeholder="Credit Score" required>
+            
+            <select name="Geography" class="form-control" required>
+                <option value="">Select Geography</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Spain">Spain</option>
+            </select>
+
+            <select name="Gender" class="form-control" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <input type="number" name="Age" class="form-control" placeholder="Age" required>
+            <input type="number" name="Tenure" class="form-control" placeholder="Tenure" required>
+            <input type="number" step="0.01" name="Balance" class="form-control" placeholder="Balance" required>
+            <input type="number" name="NumOfProducts" class="form-control" placeholder="Number of Products" required>
+            <input type="number" name="HasCrCard" class="form-control" placeholder="Has Credit Card (0/1)" required>
+            <input type="number" name="IsActiveMember" class="form-control" placeholder="Is Active Member (0/1)" required>
+            <input type="number" step="0.01" name="EstimatedSalary" class="form-control" placeholder="Estimated Salary" required>
+
+            <button type="submit" class="btn btn-primary mt-3">📊 Predict</button>
+        </form>
+
+        <p class="loading text-center mt-3">🔄 Processing... Please wait</p>
+        <h3 id="result" class="result"></h3>
+        <script>
+            document.getElementById("prediction-form").addEventListener("submit", async function(event) {
+                event.preventDefault();
+        
+                const formData = new FormData(this);
+                const loading = document.querySelector('.loading');
+                const result = document.getElementById("result");
+        
+                loading.style.display = "block";
+                result.style.display = "none";
+        
+                try {
+                    const response = await fetch("/predict", {
+                        method: "POST",
+                        body: formData
+                    });
+        
+                    const data = await response.json();
+                    loading.style.display = "none";
+        
+                    if (response.ok) {
+                        if (data.prediction.toLowerCase() === "churn") {
+                            result.textContent = `🔴 Prediction: ${data.prediction}`;
+                            result.className = "result error";  // Red color for churn
+                        } else {
+                            result.textContent = `🟢 Prediction: ${data.prediction}`;
+                            result.className = "result success"; // Green color for no churn
+                        }
+                    } else {
+                        result.textContent = `❗ ${data.error || "Error occurred"}`;
+                        result.className = "result error";
+                    }
+        
+                    result.style.display = "block";
+                } catch (error) {
+                    result.textContent = "❗ Network error. Please try again.";
+                    result.className = "result error";
+                    result.style.display = "block";
+                    loading.style.display = "none";
+                }
+            });
+        </script>
+        
+        
+    
+
+</body>
+</html>  
